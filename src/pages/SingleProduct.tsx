@@ -1,4 +1,13 @@
+import { useParams } from "react-router-dom";
+import { useGetProductByIdQuery } from "../redux/features/product/productManagementApi";
+
 const SingleProductPage = () => {
+  const { id } = useParams<{ id: string }>();
+  const { data: product, isLoading, isError } = useGetProductByIdQuery(id!);
+
+  if (isLoading) return <p>Loading...</p>;
+  if (isError) return <p>Failed to load product details. Please try again later.</p>;
+  console.log(product);
   return (
     <div className="bg-gray-50 py-30">
       <div className="max-w-6xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
@@ -6,22 +15,22 @@ const SingleProductPage = () => {
           {/* Product Image */}
           <div className="bg-gray-100 flex items-center justify-center">
             <img
-              src="https://placehold.co/600x400"
-              alt="Product"
+              src={product.image || "https://placehold.co/600x400"}
+              alt={product?.data?.name}
               className="w-full h-auto max-h-96 object-contain"
             />
           </div>
 
           {/* Product Details */}
           <div className="p-8">
-            <h1 className="text-3xl font-bold text-gray-800 mb-4">Product Name</h1>
+            <h1 className="text-3xl font-bold text-gray-800 mb-4">{product?.data?.name}</h1>
             <p className="text-gray-600 text-lg mb-6">
-              This is a detailed description of the product, highlighting its key features, benefits, and specifications.
+              {product?.data?.description}
             </p>
 
             <div className="flex items-center gap-4 mb-6">
-              <span className="text-2xl font-bold text-blue-600">$199.99</span>
-              <span className="text-gray-500 line-through">$249.99</span>
+              <span className="text-2xl font-bold text-blue-600">${product?.data?.price}</span>
+              <span className="text-gray-500 line-through">${product?.data?.price}</span>
               <span className="bg-green-100 text-green-600 px-3 py-1 rounded-full text-sm font-medium">20% OFF</span>
             </div>
 
@@ -30,7 +39,7 @@ const SingleProductPage = () => {
             </button>
 
             <div className="mt-6 text-gray-500 text-sm">
-              <p><strong>Category:</strong> Bicycles</p>
+              <p><strong>Category:</strong> {product?.data?.category}</p>
               <p><strong>Stock:</strong> Available</p>
               <p><strong>SKU:</strong> 12345</p>
             </div>

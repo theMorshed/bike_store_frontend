@@ -15,7 +15,7 @@ const AdminPage = () => {
           <h1 className="text-xl font-bold">Admin Dashboard</h1>
           <div className="flex items-center gap-4">
             <a href="#" className="hover:underline">Profile</a>
-            <Link to="/" onClick={handleSubmit} className="hover:underline">Logout</Link>
+            <Link to="/login" onClick={handleSubmit} className="hover:underline">Logout</Link>
           </div>
         </div>
       </nav>
