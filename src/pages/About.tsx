@@ -1,5 +1,3 @@
-import aboutBikeImage from '../../src/assets/images/about_bike_image.png'
-
 const AboutPage = () => {
   return (
     <div className="container mx-auto py-30">
@@ -7,7 +5,7 @@ const AboutPage = () => {
       
       <div className="flex flex-col items-left mb-8">
         <img
-          src={aboutBikeImage} // Replace with your actual image path
+          src="https://i.ibb.co.com/GPcKMRg/about-bike-image.png" // Replace with your actual image path
           alt="Bike Store"
           className="w-full max-w-xl rounded-lg mb-6"
         />

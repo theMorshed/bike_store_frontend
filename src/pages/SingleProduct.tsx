@@ -1,13 +1,46 @@
 import { useParams } from "react-router-dom";
 import { useGetProductByIdQuery } from "../redux/features/product/productManagementApi";
+import { useEffect, useRef } from "react";
+import { toast } from "sonner";
 
 const SingleProductPage = () => {
   const { id } = useParams<{ id: string }>();
-  const { data: product, isLoading, isError } = useGetProductByIdQuery(id!);
+  const { data: product, isLoading, isError, isSuccess } = useGetProductByIdQuery(id!);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Failed to load product details. Please try again later.</p>;
-  console.log(product);
+  const loadingToastId = useRef<string | undefined | number>(undefined);
+  
+  useEffect(() => {
+    // Handle loading state
+    if (isLoading) {
+      if (!loadingToastId.current) {
+        loadingToastId.current = toast.loading("Loading...");
+      }
+      } else {
+      // Dismiss loading toast when loading ends
+      if (loadingToastId.current) {
+        toast.dismiss(loadingToastId.current);
+        loadingToastId.current = undefined;
+      }
+    }
+
+    // Handle success state
+    if (isSuccess) {
+      toast.success("single product loaded successfully");
+    }
+
+    // Handle error state
+    if (isError) {
+      toast.error("Failed to load single product. Please try again later.");
+    }
+
+    // Cleanup function to dismiss the loading toast if the component unmounts
+    return () => {
+      if (loadingToastId.current) {
+        toast.dismiss(loadingToastId.current);
+      }
+    };
+  }, [isLoading, isError, isSuccess]);
+
   return (
     <div className="bg-gray-50 py-30">
       <div className="max-w-6xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
@@ -15,7 +48,7 @@ const SingleProductPage = () => {
           {/* Product Image */}
           <div className="bg-gray-100 flex items-center justify-center">
             <img
-              src={product.image || "https://placehold.co/600x400"}
+              src={product?.data?.image}
               alt={product?.data?.name}
               className="w-full h-auto max-h-96 object-contain"
             />

@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import bikeHeroImage from '../../assets/images/bike_image_banner.jpg';
 
 const HeroSection = () => {
     return (
@@ -19,7 +18,7 @@ const HeroSection = () => {
                 {/* Right Side (Image) */}
                 <div className="w-full md:w-1/2 mt-8 md:mt-0">
                     <img
-                        src={bikeHeroImage}
+                        src="https://i.ibb.co.com/nb2Sfqr/bike-image-banner.png"
                         alt="Bike"
                         className="w-full h-auto object-cover rounded-lg"
                     />

@@ -1,21 +1,50 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import featuredBike from '../../assets/images/bike_image_featured.png'
 import { useGetAllProductsQuery } from "../../redux/features/product/productManagementApi";
 import { TProduct } from "../../types/product.type";
+import { toast } from "sonner";
+import { useEffect, useRef } from "react";
 
 const FearturedProducts = () => {
-    const { data: featuredProducts, isLoading, isError } = useGetAllProductsQuery([
+    const { data: featuredProducts, isLoading, isError, isSuccess } = useGetAllProductsQuery([
         { name: "category", value: "Featured" },
     ]);
+    
+    const loadingToastId = useRef<string | undefined | number>(undefined);
 
-    if (isLoading) {
-        return <p>Loading...</p>;
-    }
+    useEffect(() => {
+        // Handle loading state
+        if (isLoading) {
+            if (!loadingToastId.current) {
+                loadingToastId.current = toast.loading("Loading...");
+            }
+            } else {
+            // Dismiss loading toast when loading ends
+            if (loadingToastId.current) {
+                toast.dismiss(loadingToastId.current);
+                loadingToastId.current = undefined;
+            }
+        }
 
-    if (isError || !featuredProducts) {
-        return <p>Failed to load featured products. Please try again later.</p>;
-    }
+        // Handle success state
+        if (isSuccess) {
+            toast.success("Featured products loaded successfully");
+        }
+
+        // Handle error state
+        if (isError) {
+            toast.error("Failed to load featured products. Please try again later.");
+        }
+
+        // Cleanup function to dismiss the loading toast if the component unmounts
+        return () => {
+            if (loadingToastId.current) {
+                toast.dismiss(loadingToastId.current);
+            }
+        };
+    }, [isLoading, isError, isSuccess]);
+
+
     return (
         <section className="py-30 bg-gray-100">            
             <div className="container mx-auto px-4">
@@ -23,17 +52,18 @@ const FearturedProducts = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {featuredProducts?.data?.slice(0, 4).map((product: TProduct) => (
                         <motion.div
-                            key={product.id}
+                            key={product._id}
                             className="bg-white p-4 shadow rounded-lg"
                             whileHover={{ scale: 1.05 }}
                         >
                             <img
-                                src={product.image || featuredBike}
+                                src={product.image}
                                 alt={product.name}
                                 className="w-full h-60 object-cover rounded-md mb-4"
                             />
                             <h4 className="text-xl font-semibold mb-2">{product.name}</h4>
                             <p className="text-gray-600 mb-4">{product.description || "No description available."}</p>
+                            <p className="text-blue-600 font-bold mb-4 text-3xl">${product.price}</p>
                             <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-xl transition duration-300">
                                 <Link to={`/product/${product._id}`}>View Details</Link>
                             </button>
