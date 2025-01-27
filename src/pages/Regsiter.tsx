@@ -1,93 +1,48 @@
-import { useState } from "react";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { Link, useNavigate } from "react-router-dom";
+import PHForm from "../components/form/PHForm";
+import PHInput from "../components/form/PHInput";
+import { Button } from "antd";
+import { useRegisterUserMutation } from "../redux/features/auth/authApi";
+import { FieldValues } from "react-hook-form";
+import { toast } from "sonner";
 
 const Register = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
-
-  const handleRegister = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!email || !password || !confirmPassword) {
-      setError("Please fill in all fields.");
-      return;
+  const navigate = useNavigate();
+  const [register] = useRegisterUserMutation();
+  const onSubmit = async(data: FieldValues) => {
+    console.log(data);
+    const toastId = toast.loading('Registering...', {duration: 2000});
+    try {
+      const userInfo = {
+        name: data.name,
+        email: data.email,
+        password: data.password
+      }
+      const result = await register(userInfo).unwrap();
+      console.log(result);
+      navigate(`/login`);
+      toast.success('User registered successfully', {id: toastId, duration: 2000});
+    } catch(err) {
+        toast.error('Something went wrong!', {id: toastId, duration: 2000});
     }
+}
 
-    if (password !== confirmPassword) {
-      setError("Passwords do not match.");
-      return;
-    }
-
-    // Mock registration logic
-    alert("Registration successful!");
-    setError("");
-  };
-
-  return (
+  return (    
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-sm">
-        <h2 className="text-2xl font-bold text-center mb-4">Register</h2>
-
-        {error && (
-          <div className="bg-red-100 text-red-700 p-3 rounded mb-4 text-sm">
-            {error}
-          </div>
-        )}
-
-        <form onSubmit={handleRegister}>
-          <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-700 font-semibold mb-2">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-200"
-              placeholder="Enter your email"
-            />
-          </div>
-
-          <div className="mb-4">
-            <label htmlFor="password" className="block text-gray-700 font-semibold mb-2">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-200"
-              placeholder="Enter your password"
-            />
-          </div>
-
-          <div className="mb-4">
-            <label htmlFor="confirmPassword" className="block text-gray-700 font-semibold mb-2">
-              Confirm Password
-            </label>
-            <input
-              type="password"
-              id="confirmPassword"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-200"
-              placeholder="Confirm your password"
-            />
-          </div>
-
-          <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded transition duration-300">
-            Register
-          </button>
-        </form>
-
-        <p className="text-center text-sm text-gray-600 mt-4">
-          Already have an account? <a href="#login" className="text-blue-600 hover:underline">Login here</a>
-        </p>
+          <h2 className="text-2xl font-bold text-center mb-4">Register</h2>
+          <PHForm onSubmit={onSubmit} >
+              <PHInput type='text' name='name' label='Name: ' />
+              <PHInput type='text' name='email' label='Email: ' />
+              <PHInput type='text' name='password' label='Password: ' />
+              <Button size="large" className="w-full" htmlType="submit">Register</Button>                    
+          </PHForm>
+          <p className="text-center text-sm text-gray-600 mt-4">
+          Already have an account? <Link to="/login" className="text-blue-600 hover:underline">Login Here</Link>
+          </p>
       </div>
-    </div>
+  </div>
   );
 };
 

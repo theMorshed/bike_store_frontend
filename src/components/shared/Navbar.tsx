@@ -35,10 +35,11 @@ const Navbar = () => {
             {isMenuOpen && (
                 <div className="sm:hidden text-blue-600 p-4">
                     <ul className="space-y-4">
-                        <li><a href="#" className="block hover:text-blue-500">Home</a></li>
-                        <li><a href="#" className="block hover:text-blue-500">Products</a></li>
-                        <li><a href="#" className="block hover:text-blue-500">About</a></li>
-                        <li><a href="#" className="block hover:text-blue-500">Contact</a></li>
+                        <Link to="/" className="block hover:text-blue-700">Home</Link>
+                        <Link to="/products" className="block hover:text-blue-700">Products</Link>
+                        <Link to="/about" className="block hover:text-blue-700">About</Link>                    
+                        <Link to="/login" className="block hover:text-blue-700">Login</Link>
+                        <Link to="/register" className="block hover:text-blue-700">Register</Link>
                     </ul>
                 </div>
             )}

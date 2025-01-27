@@ -1,4 +1,12 @@
+import { Link } from "react-router-dom";
+import { logout } from "../../redux/features/auth/authSlice";
+import { useAppDispatch } from "../../redux/hooks";
+
 const AdminPage = () => {
+    const dispatch = useAppDispatch();
+    const handleSubmit = () => {
+      dispatch(logout());
+    }
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       {/* Top Navigation */}
@@ -7,7 +15,7 @@ const AdminPage = () => {
           <h1 className="text-xl font-bold">Admin Dashboard</h1>
           <div className="flex items-center gap-4">
             <a href="#" className="hover:underline">Profile</a>
-            <a href="#" className="hover:underline">Logout</a>
+            <Link to="/" onClick={handleSubmit} className="hover:underline">Logout</Link>
           </div>
         </div>
       </nav>
