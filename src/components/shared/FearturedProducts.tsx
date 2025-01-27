@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import featuredBike from '../../assets/images/bike_image_featured.png'
 
 const FearturedProducts = () => {
     return (
@@ -14,13 +15,14 @@ const FearturedProducts = () => {
                             whileHover={{ scale: 1.05 }}
                         >
                             <img
-                                src="https://placehold.co/600x400"
+                                src={featuredBike}
                                 alt={`Bike ${product}`}
                                 className="w-full h-60 object-cover rounded-md mb-4"
                             />
                             <h4 className="text-xl font-semibold mb-2">Bike Model {product}</h4>
                             <p className="text-gray-600 mb-4">High-quality bike for all terrains.</p>
-                            <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-xl transition duration-300">View Details</button>
+                            <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-xl transition duration-300"><Link to="/single-product">View Details</Link></button>
+                            <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-xl transition duration-300 ml-2">Add to Cart</button>
                         </motion.div>
                     ))}
                 </div>

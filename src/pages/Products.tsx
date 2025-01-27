@@ -1,16 +1,18 @@
+import { Link } from 'react-router-dom';
+import featuredBikeImage from '../../src/assets/images/bike_image_featured.png'
 const ProductCard = () => {
   return (
     <div className="bg-white rounded-lg p-4 shadow-md">
         <img
-            src="https://placehold.co/600x400"
+            src={featuredBikeImage}
             alt="product image"
             className="w-full h-60 object-cover rounded-md mb-4"
         />
         <h4 className="text-xl font-semibold mb-2">Bike Model hsdsd</h4>
         <p className="text-gray-600 mb-4">High-quality bike for all terrains.</p>
         <p className="text-blue-600 font-bold mb-4 text-3xl">$15.30</p>
-        <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-xl transition duration-300">View Details</button>
-        <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-xl transition duration-300 ml-4">Add to Cart</button>
+        <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-xl transition duration-300"><Link to="/single-product">View Details</Link></button>
+        <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-xl transition duration-300 ml-2">Add to Cart</button>
     </div>
   );
 };

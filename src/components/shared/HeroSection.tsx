@@ -1,3 +1,6 @@
+import { Link } from 'react-router-dom';
+import bikeHeroImage from '../../assets/images/bike_image_banner.jpg';
+
 const HeroSection = () => {
     return (
         <section className="w-full pt-10 pb-30">
@@ -10,20 +13,15 @@ const HeroSection = () => {
                     <p className="text-lg sm:text-xl text-gray-600 mb-6">
                         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iure rerum molestiae consectetur totam odio deserunt, voluptatum distinctio ipsam odit deleniti? Dignissimos natus quibusdam suscipit fugiat laudantium dolores ullam enim maxime.
                     </p>
-                    <a
-                        href="#shop-now"
-                        className="inline-block bg-blue-600 text-white py-3 px-8 rounded-xl text-lg font-semibold hover:bg-blue-700 transition duration-300"
-                    >
-                        Shop Now
-                    </a>
+                    <Link to="/products" className="inline-block bg-blue-600 text-white py-3 px-8 rounded-xl text-lg font-semibold hover:bg-blue-700 transition duration-300">Shop now</Link>
                 </div>
 
                 {/* Right Side (Image) */}
                 <div className="w-full md:w-1/2 mt-8 md:mt-0">
                     <img
-                        src="https://placehold.co/600x400"
+                        src={bikeHeroImage}
                         alt="Bike"
-                        className="w-full h-auto object-cover rounded-lg shadow-lg"
+                        className="w-full h-auto object-cover rounded-lg"
                     />
                 </div>
             </div>

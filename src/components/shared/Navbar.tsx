@@ -18,7 +18,7 @@ const Navbar = () => {
                 <ul className="hidden sm:flex space-x-8">
                     <Link to="/" className="hover:text-blue-700">Home</Link>
                     <Link to="/products" className="hover:text-blue-700">Products</Link>
-                    <Link to="/" className="hover:text-blue-700">About</Link>                    
+                    <Link to="/about" className="hover:text-blue-700">About</Link>                    
                     <Link to="/login" className="hover:text-blue-700">Login</Link>
                     <Link to="/register" className="hover:text-blue-700">Register</Link>
                 </ul>
