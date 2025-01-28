@@ -1,9 +1,11 @@
-import { useSelector } from 'react-redux';
-import { selectCartProducts, selectTotalPrice } from '../redux/features/cart/cartSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearCart, selectCartProducts, selectTotalPrice } from '../redux/features/cart/cartSlice';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 const CheckoutPage = () => {
+  const dispatch = useDispatch();
   const cartProducts = useSelector(selectCartProducts);
   const totalPrice = useSelector(selectTotalPrice);
   const navigate = useNavigate();
@@ -23,13 +25,14 @@ const CheckoutPage = () => {
   };
 
   const handleOrder = () => {
+    dispatch(clearCart());
     // You can dispatch an action or make an API call to place the order
-    alert('Order placed successfully!');
+    toast.success('Order placed successfully!');
     navigate('/');
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 py-30">
       <h2 className="text-2xl font-bold mb-4">Checkout</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Customer Information */}

@@ -10,6 +10,10 @@ import AboutPage from "../pages/About";
 import CartPage from "../pages/CartPage";
 import PrivateRoute from "../pages/admin/PrivateRoute";
 import CheckoutPage from "../pages/CheckoutPage";
+import ManageOrders from "../components/shared/ManageOrders";
+import AdminLayout from "../components/layout/AdminLayout";
+import ManageProducts from "../components/shared/ManageProducts";
+import ManageUsers from "../components/shared/ManageUsers";
 
 const router = createBrowserRouter([
     {
@@ -43,22 +47,34 @@ const router = createBrowserRouter([
             {
                 path: '/cart',
                 element: <CartPage />
+            },
+            {
+                path: '/checkout',
+                element: <PrivateRoute><CheckoutPage /></PrivateRoute>
             }
         ]
     },
     {
         path: '/admin',
-        element: <PrivateRoute><AdminPage /></PrivateRoute>,
+        element: <PrivateRoute><AdminLayout /></PrivateRoute>,
         children: [
             {
                 index: true,
                 element: <AdminPage />
+            },
+            {
+                path: 'orders',
+                element: <ManageOrders />
+            },
+            {
+                path: 'products',
+                element: <ManageProducts />
+            },
+            {
+                path: 'users',
+                element: <ManageUsers />
             }
         ]
-    },
-    {
-        path: '/checkout',
-        element: <PrivateRoute><CheckoutPage /></PrivateRoute>
     }
 ]);
 
