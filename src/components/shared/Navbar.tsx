@@ -1,10 +1,20 @@
 import { ShoppingCart } from "lucide-react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { selectTotalQuantity } from "../../redux/features/cart/cartSlice";
+import { logout, selectCurrentUser } from "../../redux/features/auth/authSlice";
 
 const Navbar = () => {
+    const dispatch = useDispatch();
+    const user = useSelector(selectCurrentUser); // Get the current user from the Redux store
+
+    const handleLogout = () => {
+        // Removing the cart object from localStorage
+        localStorage.removeItem('cart');
+        dispatch(logout()); // Dispatch the logout action
+    };
+
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const totalQuantity = useSelector(selectTotalQuantity);
 
@@ -22,9 +32,19 @@ const Navbar = () => {
                 <ul className="hidden sm:flex space-x-8">
                     <Link to="/" className="hover:text-blue-700">Home</Link>
                     <Link to="/products" className="hover:text-blue-700">Products</Link>
-                    <Link to="/about" className="hover:text-blue-700">About</Link>                    
-                    <Link to="/login" className="hover:text-blue-700">Login</Link>
-                    <Link to="/register" className="hover:text-blue-700">Register</Link>
+                    <Link to="/about" className="hover:text-blue-700">About</Link>   
+                    {user ? (
+                        // If the user is logged in, show the Logout button
+                        <>                     
+                            <Link to="/login" onClick={handleLogout} className="hover:text-blue-700">Logout</Link>
+                        </>
+                    ) : (
+                        // If the user is not logged in, show Login and Register buttons
+                        <>
+                            <Link to="/login" className="hover:text-blue-700">Login</Link>
+                            <Link to="/register" className="hover:text-blue-700">Register</Link>
+                        </>
+                    )}
                     {/* Cart Icon */}
                     <Link to="/cart" className="relative">
                     <ShoppingCart size={24} />
@@ -51,8 +71,18 @@ const Navbar = () => {
                         <Link to="/" className="block hover:text-blue-700">Home</Link>
                         <Link to="/products" className="block hover:text-blue-700">Products</Link>
                         <Link to="/about" className="block hover:text-blue-700">About</Link>                    
-                        <Link to="/login" className="block hover:text-blue-700">Login</Link>
-                        <Link to="/register" className="block hover:text-blue-700">Register</Link>
+                        {user ? (
+                        // If the user is logged in, show the Logout button
+                            <>                                                    
+                                <Link to="/login" onClick={handleLogout} className="hover:text-blue-700">Logout</Link>
+                            </>
+                        ) : (
+                            // If the user is not logged in, show Login and Register buttons
+                            <>
+                                <Link to="/login" className="block hover:text-blue-700">Login</Link>
+                                <Link to="/register" className="block hover:text-blue-700">Register</Link>
+                            </>
+                        )}
                         {/* Cart Icon */}
                         <Link to="/cart" className="relative">
                         <ShoppingCart size={24} />
