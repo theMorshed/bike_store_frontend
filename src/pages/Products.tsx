@@ -1,13 +1,20 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link } from 'react-router-dom';
 import { useGetAllProductsQuery } from '../redux/features/product/productManagementApi';
-import { TProduct } from '../types/product.type';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
+import { useDispatch } from 'react-redux';
+import { addProduct, Product } from '../redux/features/cart/cartSlice';
 
 // Define the type for query arguments
 type TQueryParam = { name: string; value: string };
 
 const ProductsPage = () => {
+  const dispatch = useDispatch();
+
+  const handleAddToCart = (product: Product) => {
+    dispatch(addProduct({ product, quantity: 1 }));
+  };
   // State for search and category filters
   const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState("all");
@@ -102,7 +109,7 @@ const ProductsPage = () => {
       </aside>
 
       <main className="w-full md:w-2/4 lg:w-3/4 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-        {allProducts?.data?.map((product: TProduct) => (
+        {allProducts?.data?.map((product: Product) => (
             <div key={product._id} className="bg-white rounded-lg p-4 shadow-md">
               <img
                   src={product.image}
@@ -113,7 +120,7 @@ const ProductsPage = () => {
               <p className="text-gray-600 mb-4">{product.description}</p>
               <p className="text-blue-600 font-bold mb-4 text-3xl">${product.price}</p>
               <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-xl transition duration-300"><Link to={`/product/${product._id}`}>View Details</Link></button>
-              <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-xl transition duration-300 ml-2">Add to Cart</button>
+              <button onClick={() => handleAddToCart(product)} className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-xl transition duration-300 ml-2 cursor-pointer">Add to Cart</button>
             </div>
         ))}
       </main>

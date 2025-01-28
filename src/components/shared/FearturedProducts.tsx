@@ -1,11 +1,17 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useGetAllProductsQuery } from "../../redux/features/product/productManagementApi";
-import { TProduct } from "../../types/product.type";
 import { toast } from "sonner";
 import { useEffect, useRef } from "react";
+import { addProduct, Product } from "../../redux/features/cart/cartSlice";
+import { useDispatch } from "react-redux";
 
 const FearturedProducts = () => {
+    const dispatch = useDispatch();
+
+    const handleAddToCart = (product: Product) => {
+        dispatch(addProduct({ product, quantity: 1 }));
+    };
     const { data: featuredProducts, isLoading, isError, isSuccess } = useGetAllProductsQuery([
         { name: "category", value: "Featured" },
     ]);
@@ -50,7 +56,7 @@ const FearturedProducts = () => {
             <div className="container mx-auto px-4">
                 <h3 className="text-4xl font-bold text-center mb-20">Featured Products</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {featuredProducts?.data?.slice(0, 4).map((product: TProduct) => (
+                    {featuredProducts?.data?.slice(0, 4).map((product: Product) => (
                         <motion.div
                             key={product._id}
                             className="bg-white p-4 shadow rounded-lg"
@@ -67,7 +73,7 @@ const FearturedProducts = () => {
                             <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-xl transition duration-300">
                                 <Link to={`/product/${product._id}`}>View Details</Link>
                             </button>
-                            <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-xl transition duration-300 ml-2">
+                            <button onClick={() => handleAddToCart(product)} className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-xl transition duration-300 ml-2 cursor-pointer">
                                 Add to Cart
                             </button>
                         </motion.div>

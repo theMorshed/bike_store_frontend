@@ -1,8 +1,12 @@
+import { ShoppingCart } from "lucide-react";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { selectTotalQuantity } from "../../redux/features/cart/cartSlice";
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const totalQuantity = useSelector(selectTotalQuantity);
 
     // Toggle menu visibility
     const toggleMenu = () => {
@@ -21,6 +25,15 @@ const Navbar = () => {
                     <Link to="/about" className="hover:text-blue-700">About</Link>                    
                     <Link to="/login" className="hover:text-blue-700">Login</Link>
                     <Link to="/register" className="hover:text-blue-700">Register</Link>
+                    {/* Cart Icon */}
+                    <Link to="/cart" className="relative">
+                    <ShoppingCart size={24} />
+                    {totalQuantity > 0 && (
+                        <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                        {totalQuantity}
+                        </span>
+                    )}
+                    </Link>
                 </ul>
 
                 {/* Mobile Menu Button */}
@@ -40,6 +53,15 @@ const Navbar = () => {
                         <Link to="/about" className="block hover:text-blue-700">About</Link>                    
                         <Link to="/login" className="block hover:text-blue-700">Login</Link>
                         <Link to="/register" className="block hover:text-blue-700">Register</Link>
+                        {/* Cart Icon */}
+                        <Link to="/cart" className="relative">
+                        <ShoppingCart size={24} />
+                        {totalQuantity > 0 && (
+                            <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                            {totalQuantity}
+                            </span>
+                        )}
+                        </Link>
                     </ul>
                 </div>
             )}

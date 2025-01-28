@@ -7,8 +7,9 @@ import ProductsPage from "../pages/Products";
 import SingleProductPage from "../pages/SingleProduct";
 import AdminPage from "../pages/admin/AdminHome";
 import AboutPage from "../pages/About";
-import CheckoutPage from "../pages/CheckoutPage";
 import CartPage from "../pages/CartPage";
+import PrivateRoute from "../pages/admin/PrivateRoute";
+import CheckoutPage from "../pages/CheckoutPage";
 
 const router = createBrowserRouter([
     {
@@ -40,10 +41,6 @@ const router = createBrowserRouter([
                 element: <AboutPage />
             },
             {
-                path: '/checkout',
-                element: <CheckoutPage />
-            },
-            {
                 path: '/cart',
                 element: <CartPage />
             }
@@ -51,13 +48,17 @@ const router = createBrowserRouter([
     },
     {
         path: '/admin',
-        element: <AdminPage />,
+        element: <PrivateRoute><AdminPage /></PrivateRoute>,
         children: [
             {
                 index: true,
                 element: <AdminPage />
             }
         ]
+    },
+    {
+        path: '/checkout',
+        element: <PrivateRoute><CheckoutPage /></PrivateRoute>
     }
 ]);
 

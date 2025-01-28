@@ -11,6 +11,7 @@ import { setUser, TUser } from "../redux/features/auth/authSlice";
 import { verifyToken } from "../utils/verifyToken";
 import PHInput from "../components/form/PHInput";
 import { Button } from "antd";
+import { loadCartFromLocalStorage } from "../redux/features/cart/cartSlice"; // Import the action to load the cart
 
 const Login = () => {
     const dispatch = useAppDispatch();
@@ -20,25 +21,34 @@ const Login = () => {
     const defaultValues = {
         email: 'morshed@gmail.com',
         password: '123456'
-    }
+    };
 
     const onSubmit = async(data: FieldValues) => {
-        console.log(data);
         const toastId = toast.loading('Logging in', {duration: 2000});
         try {
             const userInfo = {
                 email: data.email,
                 password: data.password
-            }
+            };
             const result = await login(userInfo).unwrap();
             const user = verifyToken(result.data.token) as TUser;
-            dispatch(setUser({user: user, token: result.data.token}));
+            dispatch(setUser({ user: user, token: result.data.token }));
+
+            // Load the cart from localStorage if it exists
+            const savedCart = localStorage.getItem('cart');
+            if (savedCart) {
+                dispatch(loadCartFromLocalStorage(JSON.parse(savedCart)));
+                navigate('/checkout');
+                toast.success('Logged in', {id: toastId, duration: 2000});
+                return;
+            }
+
             navigate(`/${user.role}`);
             toast.success('Logged in', {id: toastId, duration: 2000});
         } catch(err) {
             toast.error('Something went wrong!', {id: toastId, duration: 2000});
         }
-    }
+    };
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">

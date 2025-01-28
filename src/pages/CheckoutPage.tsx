@@ -1,115 +1,111 @@
-import React, { useState } from 'react';
-
-type CartItem = {
-  id: number;
-  name: string;
-  price: number;
-  quantity: number;
-};
+import { useSelector } from 'react-redux';
+import { selectCartProducts, selectTotalPrice } from '../redux/features/cart/cartSlice';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const CheckoutPage = () => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    { id: 1, name: 'Mountain Bike', price: 500, quantity: 1 },
-    { id: 2, name: 'Road Bike', price: 700, quantity: 2 },
-    { id: 3, name: 'Bike Helmet', price: 50, quantity: 1 },
-  ]);
-  console.log(setCartItems);
-  
-  const [discountCode, setDiscountCode] = useState<string>('');
-  const [discountApplied, setDiscountApplied] = useState<boolean>(false);
+  const cartProducts = useSelector(selectCartProducts);
+  const totalPrice = useSelector(selectTotalPrice);
+  const navigate = useNavigate();
 
-  const handleDiscountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDiscountCode(e.target.value);
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    address: '',
+    paymentMethod: 'creditCard',
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const applyDiscount = () => {
-    if (discountCode === 'BIKE10') {
-      setDiscountApplied(true);
-    } else {
-      alert('Invalid discount code');
-    }
-  };
-
-  const removeDiscount = () => {
-    setDiscountApplied(false);
-    setDiscountCode('');
-  };
-
-  const calculateTotal = () => {
-    const subtotal = cartItems.reduce(
-      (total, item) => total + item.price * item.quantity,
-      0
-    );
-    const discount = discountApplied ? subtotal * 0.1 : 0;
-    return subtotal - discount;
-  };
-
-  const handleCheckout = () => {
-    alert('Checkout successful! Thank you for your purchase.');
-    // Here you would normally integrate with a payment gateway.
+  const handleOrder = () => {
+    // You can dispatch an action or make an API call to place the order
+    alert('Order placed successfully!');
+    navigate('/');
   };
 
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-4xl font-bold text-center mb-6">Checkout</h1>
-
-      <div className="flex flex-col space-y-6">
-        {/* Cart Items */}
+    <div className="container mx-auto p-4">
+      <h2 className="text-2xl font-bold mb-4">Checkout</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Customer Information */}
         <div>
-          <h2 className="text-2xl font-semibold mb-4">Your Cart</h2>
-          {cartItems.map((item) => (
-            <div key={item.id} className="flex justify-between mb-4">
-              <div>
-                <p className="text-xl font-medium">{item.name}</p>
-                <p className="text-gray-600">Price: ${item.price}</p>
-                <p className="text-gray-600">Quantity: {item.quantity}</p>
-              </div>
-              <div>
-                <p className="text-xl font-medium">${item.price * item.quantity}</p>
-              </div>
+          <h3 className="text-xl font-semibold mb-4">Billing Information</h3>
+          <form className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium mb-1">Full Name</label>
+              <input
+                type="text"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleChange}
+                className="w-full p-2 border rounded"
+                placeholder="Enter your full name"
+              />
             </div>
-          ))}
+            <div>
+              <label className="block text-sm font-medium mb-1">Email</label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full p-2 border rounded"
+                placeholder="Enter your email"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Address</label>
+              <input
+                type="text"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                className="w-full p-2 border rounded"
+                placeholder="Enter your address"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Payment Method</label>
+              <select
+                name="paymentMethod"
+                value={formData.paymentMethod}
+                onChange={handleChange}
+                className="w-full p-2 border rounded"
+              >
+                <option value="creditCard">Credit Card</option>
+                <option value="paypal">PayPal</option>
+                <option value="cashOnDelivery">Cash on Delivery</option>
+              </select>
+            </div>
+          </form>
         </div>
 
-        {/* Discount Code */}
-        <div className="flex items-center space-x-4">
-          <input
-            type="text"
-            value={discountCode}
-            onChange={handleDiscountChange}
-            placeholder="Enter discount code"
-            className="p-2 border border-gray-300 rounded"
-          />
-          {!discountApplied ? (
-            <button
-              onClick={applyDiscount}
-              className="px-4 py-2 bg-blue-500 text-white rounded"
-            >
-              Apply Discount
-            </button>
-          ) : (
-            <button
-              onClick={removeDiscount}
-              className="px-4 py-2 bg-red-500 text-white rounded"
-            >
-              Remove Discount
-            </button>
-          )}
-        </div>
-
-        {/* Total */}
-        <div className="flex justify-between text-xl font-semibold mt-4">
-          <p>Total</p>
-          <p>${calculateTotal().toFixed(2)}</p>
-        </div>
-
-        {/* Checkout Button */}
-        <div className="mt-6">
+        {/* Order Summary */}
+        <div>
+          <h3 className="text-xl font-semibold mb-4">Order Summary</h3>
+          <div className="bg-gray-100 p-4 rounded-lg space-y-4">
+            {cartProducts.map(({ product, quantity }) => (
+              <div key={product._id} className="flex justify-between">
+                <span>{product.name} (x{quantity})</span>
+                <span>${(product.price * quantity).toFixed(2)}</span>
+              </div>
+            ))}
+            <hr className="my-4" />
+            <div className="flex justify-between font-bold text-lg">
+              <span>Total Price</span>
+              <span>${totalPrice.toFixed(2)}</span>
+            </div>
+          </div>
           <button
-            onClick={handleCheckout}
-            className="w-full px-6 py-3 bg-blue-600 text-white text-xl font-semibold rounded"
+            onClick={handleOrder}
+            className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg transition duration-300"
           >
-            Proceed to Checkout
+            Confirm Order
           </button>
         </div>
       </div>
