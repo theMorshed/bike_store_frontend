@@ -13,7 +13,7 @@ const ManageProducts = () => {
       <h3 className="text-2xl font-semibold mb-6">Manage Products</h3>
       <div className="overflow-x-auto bg-white shadow-md rounded-lg">
         <table className="min-w-full table-auto">
-          <thead className="bg-blue-600 text-white">
+          <thead className="bg-amber-600 text-white">
             <tr>
               <th className="px-6 py-3 text-left">Product ID</th>
               <th className="px-6 py-3 text-left">Name</th>
@@ -33,7 +33,7 @@ const ManageProducts = () => {
                 <td className="px-6 py-4">{product.quantity}</td>
                 <td className="px-6 py-4">
                   <button
-                    className="text-blue-600 hover:underline"
+                    className="text-amber-600 hover:underline"
                     onClick={() => handleViewProduct(product._id)}
                   >
                     View Details

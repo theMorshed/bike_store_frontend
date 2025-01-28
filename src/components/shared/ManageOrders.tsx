@@ -12,7 +12,7 @@ const ManageOrders = () => {
       <h3 className="text-2xl font-semibold mb-6">Manage Orders</h3>
       <div className="overflow-x-auto bg-white shadow-md rounded-lg">
         <table className="min-w-full table-auto">
-          <thead className="bg-blue-600 text-white">
+          <thead className="bg-amber-600 text-white">
             <tr>
               <th className="px-6 py-3 text-left">Order ID</th>
               <th className="px-6 py-3 text-left">Customer</th>
@@ -31,10 +31,10 @@ const ManageOrders = () => {
                   <span
                     className={`inline-block px-3 py-1 rounded-full text-white ${
                       order.status === "Pending"
-                        ? "bg-yellow-500"
+                        ? "bg-amber-500"
                         : order.status === "Completed"
                         ? "bg-green-500"
-                        : "bg-red-500"
+                        : "bg-green-500"
                     }`}
                   >
                     {order.status}
@@ -42,7 +42,7 @@ const ManageOrders = () => {
                 </td>
                 <td className="px-6 py-4">
                   <button
-                    className="text-blue-600 hover:underline"
+                    className="text-amber-600 hover:underline"
                     onClick={() => handleViewOrder(order._id)}
                   >
                     View Details

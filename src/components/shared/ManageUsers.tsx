@@ -12,7 +12,7 @@ const ManageUsers = () => {
       <h3 className="text-2xl font-semibold mb-6">Manage Users</h3>
       <div className="overflow-x-auto bg-white shadow-md rounded-lg">
         <table className="min-w-full table-auto">
-          <thead className="bg-blue-600 text-white">
+          <thead className="bg-amber-600 text-white">
             <tr>
               <th className="px-6 py-3 text-left">User ID</th>
               <th className="px-6 py-3 text-left">Name</th>
@@ -32,7 +32,7 @@ const ManageUsers = () => {
                 <td className="px-6 py-4">
                   <span
                     className={`px-3 py-1 rounded-full text-sm ${
-                      user.isBlocked ? "bg-green-500 text-white" : "bg-blue-600 text-white"
+                      user.isBlocked ? "bg-green-500 text-white" : "bg-amber-600 text-white"
                     }`}
                   >
                     {user.isBlocked ? "Inactive" : "Active"}
@@ -40,7 +40,7 @@ const ManageUsers = () => {
                 </td>
                 <td className="px-6 py-4">
                   <button
-                    className="text-blue-600 hover:underline"
+                    className="text-amber-600 hover:underline"
                     onClick={() => handleViewUser(user._id)}
                   >
                     View Details

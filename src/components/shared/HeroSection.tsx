@@ -12,7 +12,7 @@ const HeroSection = () => {
                     <p className="text-lg sm:text-xl text-gray-600 mb-6">
                         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iure rerum molestiae consectetur totam odio deserunt, voluptatum distinctio ipsam odit deleniti? Dignissimos natus quibusdam suscipit fugiat laudantium dolores ullam enim maxime.
                     </p>
-                    <Link to="/products" className="inline-block bg-blue-600 text-white py-3 px-8 rounded-xl text-lg font-semibold hover:bg-blue-700 transition duration-300">Shop now</Link>
+                    <Link to="/products" className="inline-block bg-amber-600 text-white py-3 px-8 rounded-xl text-lg font-semibold hover:bg-amber-700 transition duration-300">Shop now</Link>
                 </div>
 
                 {/* Right Side (Image) */}

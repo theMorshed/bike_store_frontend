@@ -80,17 +80,17 @@ const ProductsPage = () => {
     <div className="container mx-auto flex flex-col md:flex-row gap-6 pt-10 pb-30">
       {/* Filters Section */}
       <aside className="w-full md:w-2/4 lg:w-1/4 bg-gray-100 p-4 rounded-lg pt-10">
-        <h2 className="text-xl font-semibold mb-4">Filters</h2>
+        <h2 className="text-xl font-semibold mb-4 text-amber-600">Filters</h2>
         <form onSubmit={handleSearch}>
           <input
             type="text"
             placeholder="Search products"
-            className="w-full p-2 border rounded mb-4"
+            className="w-full p-2 border border-amber-600 rounded mb-4"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <select
-            className="w-full p-2 border rounded mb-4"
+            className="w-full p-2 border border-amber-600 rounded mb-4"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
@@ -101,7 +101,7 @@ const ProductsPage = () => {
           </select>
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300"
+            className="w-full bg-amber-600 text-white py-2 px-4 rounded-lg hover:bg-amber-700 transition duration-300"
           >
             Apply Filters
           </button>
@@ -116,11 +116,11 @@ const ProductsPage = () => {
                   alt={product.name}
                   className="w-full h-60 object-cover rounded-md mb-4"
               />
-              <h4 className="text-xl font-semibold mb-2">{product.name}</h4>
+              <h4 className="text-xl font-semibold mb-2 text-gray-800">{product.name}</h4>
               <p className="text-gray-600 mb-4">{product.description}</p>
-              <p className="text-blue-600 font-bold mb-4 text-3xl">${product.price}</p>
-              <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-xl transition duration-300"><Link to={`/product/${product._id}`}>View Details</Link></button>
-              <button onClick={() => handleAddToCart(product)} className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-xl transition duration-300 ml-2 cursor-pointer">Add to Cart</button>
+              <p className="text-amber-600 font-bold mb-4 text-3xl">${product.price}</p>
+              <button className="bg-amber-600 hover:bg-amber-700 text-white py-2 px-4 rounded-xl transition duration-300"><Link to={`/product/${product._id}`}>View Details</Link></button>
+              <button onClick={() => handleAddToCart(product)} className="bg-amber-600 hover:bg-amber-700 text-white py-2 px-4 rounded-xl transition duration-300 ml-2 cursor-pointer">Add to Cart</button>
             </div>
         ))}
       </main>

@@ -53,14 +53,14 @@ const Login = () => {
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
             <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-sm">
-                <h2 className="text-2xl font-bold text-center mb-4">Login</h2>
+                <h2 className="text-amber-600 text-2xl font-bold text-center mb-4">Login</h2>
                 <PHForm onSubmit={onSubmit} defaultValues={defaultValues}>
                     <PHInput type='text' name='email' label='Email: ' />
                     <PHInput type='text' name='password' label='Password: ' />
                     <Button size="large" className="w-full" htmlType="submit">Login</Button>                    
                 </PHForm>
                 <p className="text-center text-sm text-gray-600 mt-4">
-                Don't have an account? <Link to="/register" className="text-blue-600 hover:underline">Register Here</Link>
+                Don't have an account? <Link to="/register" className="text-amber-600 hover:underline">Register Here</Link>
                 </p>
             </div>
         </div>

@@ -54,7 +54,7 @@ const FearturedProducts = () => {
     return (
         <section className="py-30 bg-gray-100">            
             <div className="container mx-auto px-4">
-                <h3 className="text-4xl font-bold text-center mb-20">Featured Products</h3>
+                <h3 className="text-4xl font-bold text-center mb-20 text-gray-800">Featured Products</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {featuredProducts?.data?.slice(0, 4).map((product: Product) => (
                         <motion.div
@@ -67,20 +67,20 @@ const FearturedProducts = () => {
                                 alt={product.name}
                                 className="w-full h-60 object-cover rounded-md mb-4"
                             />
-                            <h4 className="text-xl font-semibold mb-2">{product.name}</h4>
+                            <h4 className="text-xl font-semibold mb-2 text-gray-800">{product.name}</h4>
                             <p className="text-gray-600 mb-4">{product.description || "No description available."}</p>
-                            <p className="text-blue-600 font-bold mb-4 text-3xl">${product.price}</p>
-                            <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-xl transition duration-300">
+                            <p className="text-amber-600 font-bold mb-4 text-3xl">${product.price}</p>
+                            <button className="bg-amber-600 hover:bg-amber-700 text-white py-2 px-4 rounded-xl transition duration-300">
                                 <Link to={`/product/${product._id}`}>View Details</Link>
                             </button>
-                            <button onClick={() => handleAddToCart(product)} className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-xl transition duration-300 ml-2 cursor-pointer">
+                            <button onClick={() => handleAddToCart(product)} className="bg-amber-600 hover:bg-amber-700 text-white py-2 px-4 rounded-xl transition duration-300 ml-2 cursor-pointer">
                                 Add to Cart
                             </button>
                         </motion.div>
                     ))}
                 </div>
                 <div className="flex items-center justify-center pt-15">
-                    <Link to="/products" className="inline-block bg-blue-600 text-white py-3 px-8 rounded-xl text-lg font-semibold hover:bg-blue-700 transition duration-300">All Products</Link>
+                    <Link to="/products" className="inline-block bg-amber-600 text-white py-3 px-8 rounded-xl text-lg font-semibold hover:bg-amber-700 transition duration-300">All Products</Link>
                 </div>
             </div>
         </section>

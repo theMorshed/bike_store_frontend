@@ -33,14 +33,14 @@ const CheckoutPage = () => {
 
   return (
     <div className="container mx-auto p-4 py-30">
-      <h2 className="text-2xl font-bold mb-4">Checkout</h2>
+      <h2 className="text-2xl font-bold mb-4 text-gray-800">Checkout</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Customer Information */}
         <div>
-          <h3 className="text-xl font-semibold mb-4">Billing Information</h3>
+          <h3 className="text-xl font-semibold mb-4 text-gray-800">Billing Information</h3>
           <form className="space-y-4">
             <div>
-              <label className="block text-sm font-medium mb-1">Full Name</label>
+              <label className="block text-sm font-medium mb-1 text-gray-800">Full Name</label>
               <input
                 type="text"
                 name="fullName"
@@ -51,7 +51,7 @@ const CheckoutPage = () => {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Email</label>
+              <label className="block text-sm font-medium mb-1 text-gray-800">Email</label>
               <input
                 type="email"
                 name="email"
@@ -62,7 +62,7 @@ const CheckoutPage = () => {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Address</label>
+              <label className="block text-sm font-medium mb-1 text-gray-800">Address</label>
               <input
                 type="text"
                 name="address"
@@ -73,7 +73,7 @@ const CheckoutPage = () => {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Payment Method</label>
+              <label className="block text-sm font-medium mb-1 text-gray-800">Payment Method</label>
               <select
                 name="paymentMethod"
                 value={formData.paymentMethod}
@@ -90,7 +90,7 @@ const CheckoutPage = () => {
 
         {/* Order Summary */}
         <div>
-          <h3 className="text-xl font-semibold mb-4">Order Summary</h3>
+          <h3 className="text-xl font-semibold mb-4 text-gray-800">Order Summary</h3>
           <div className="bg-gray-100 p-4 rounded-lg space-y-4">
             {cartProducts.map(({ product, quantity }) => (
               <div key={product._id} className="flex justify-between">
@@ -99,14 +99,14 @@ const CheckoutPage = () => {
               </div>
             ))}
             <hr className="my-4" />
-            <div className="flex justify-between font-bold text-lg">
+            <div className="flex justify-between font-bold text-2xl text-amber-600">
               <span>Total Price</span>
               <span>${totalPrice.toFixed(2)}</span>
             </div>
           </div>
           <button
             onClick={handleOrder}
-            className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg transition duration-300"
+            className="mt-6 w-full bg-amber-600 hover:bg-amber-700 text-white py-2 px-4 rounded-lg transition duration-300"
           >
             Confirm Order
           </button>

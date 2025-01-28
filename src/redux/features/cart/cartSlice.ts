@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
@@ -25,6 +26,12 @@ interface CartState {
   totalQuantity: number;
 }
 
+// Define the shape of each cart item
+interface CartProduct {
+  product: Product;
+  quantity: number;
+}
+
 const initialState: CartState = {
   products: [],
   totalQuantity: 0,
@@ -37,7 +44,7 @@ const initialCartState = savedCart ? JSON.parse(savedCart) : initialState;
 // Create the cart slice
 const cartSlice = createSlice({
   name: 'cart',
-  initialState,
+  initialState: initialCartState,
   reducers: {
     // Add a product to the cart
     addProduct: (
@@ -47,7 +54,7 @@ const cartSlice = createSlice({
       const { product, quantity } = action.payload;
 
       const existingProduct = state.products.find(
-        (item) => item.product._id === product._id
+        (item: any) => item.product._id === product._id
       );
 
       if (existingProduct) {
@@ -65,13 +72,13 @@ const cartSlice = createSlice({
       const productId = action.payload;
 
       const productToRemove = state.products.find(
-        (item) => item.product._id === productId
+        (item: any) => item.product._id === productId
       );
 
       if (productToRemove) {
         state.totalQuantity -= productToRemove.quantity;
         state.products = state.products.filter(
-          (item) => item.product._id !== productId
+          (item: any) => item.product._id !== productId
         );
       }
       localStorage.setItem('cart', JSON.stringify(state));  // Save to localStorage
@@ -85,7 +92,7 @@ const cartSlice = createSlice({
       const { productId, quantity } = action.payload;
 
       const productToUpdate = state.products.find(
-        (item) => item.product._id === productId
+        (item: any) => item.product._id === productId
       );
 
       if (productToUpdate) {
@@ -114,10 +121,10 @@ const cartSlice = createSlice({
 export const { addProduct, removeProduct, updateQuantity, clearCart, loadCartFromLocalStorage } =
   cartSlice.actions;
 
-export const selectCartProducts = (state: RootState) => state.cart.products;
+export const selectCartProducts = (state: RootState): CartProduct[] => state.cart.products;
 export const selectTotalQuantity = (state: RootState) => state.cart.totalQuantity;
 export const selectTotalPrice = (state: RootState) =>
-  state.cart.products.reduce((total, item) => total + item.product.price * item.quantity, 0);
+  state.cart.products.reduce((total: any, item: any) => total + item.product.price * item.quantity, 0);
 
 
 // Export the cart reducer
