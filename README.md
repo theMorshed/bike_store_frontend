@@ -1,50 +1,114 @@
-# React + TypeScript + Vite
+# Bike Store Frontend Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a simple application for managing a bike store. It includes functionalities for managing bike products and handling customer orders. The application uses **React**, **Redux**, **CORS**, and **TypeScript** to provide a complete solution for managing products and orders in the store.
+This is the frontend of a Bike Store application built with **React**, **Redux**, and **Tailwind CSS**. It allows users to browse and manage bike products, place orders, and manage their accounts. The application uses Ant Design **(AntD)** for UI components, **jsonwebtoken** for authentication, **Sonner** for notifications, and **CORS** to handle cross-origin requests.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-   **Authentication:**
 
-## Expanding the ESLint configuration
+    -   User login and registration with JWT authentication.
+    -   Role-based access control (Admin and Customer).
+    -   Protected routes to restrict access to specific parts of the app based on the user's role.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+-   **Product Management:**
 
-- Configure the top-level `parserOptions` property like this:
+    -   View a list of bikes available in the store.
+    -   Search for bikes by name, brand, or category.
+    -   View bike details (name, description, price, etc.).
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+-   **Order Management:**
+
+    -   Place orders for bikes.
+    -   Track orders based on customer email and product details.
+    -   Reduce stock and manage inventory when an order is placed.
+    -   View total orders placed by the customer.
+    -   Admin can view all orders
+
+-   **Inventory Management:**
+
+    -   Update bike availability based on the stock.
+    -   Display "Out of Stock" when a product is no longer available.
+
+-   **UI And Notification:**
+
+    -   Use of Ant Design (AntD) for professional and responsive UI components.
+    -   Sonner for toast notifications (success, error, and info messages).
+
+## Technologies Used
+
+-   **React** –  A JavaScript library for building user interfaces.
+-   **Redux** – A state management library for managing application state.
+-   **CORS** – Middleware for enabling Cross-Origin Resource Sharing between frontend and backend.
+-   **Ant Design(AntD)** – A UI component library for building modern web applications.
+-   **Tailwind CSS** – A utility-first CSS framework for rapid UI development.
+-   **JWT(jsonwebtoken)** – JSON Web Tokens for authentication and securing routes.
+-   **Sonner** – A lightweight toast notification library for user feedback.
+
+## Requirements
+
+Before running the project locally, make sure you have the following installed:
+
+-   **Node.js** – Version 16.x or higher
+-   **npm or yarn** – Package managers for managing dependencies
+
+## Setting Up the Project Locally
+
+### 1. Clone the Repository
+
+Clone this repository to your local machine using the following command:
+
+```bash
+git clone https://github.com/theMorshed/bike_store_frontend.git
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### 2. Install Dependencies
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+Navigate to the project directory and install all required dependencies:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```bash
+cd bike_store_frontend
+npm install
 ```
+
+### 3. Run the Application
+
+Start the development server by running the following command:
+
+```bash
+npm run dev
+```
+
+This will start the server on the port specified in your .env file (default: 5000).
+
+### 4. Access the Application
+
+Once the server is running, you can access the application API at:
+
+```bash
+http://localhost:5173
+```
+
+## Development & Contribution
+
+- Fork the repository to your own GitHub account.
+- Clone your fork to your local machine.
+- Create a new branch for your changes.
+- Make your changes and commit them.
+- Push your changes and create a pull request.
+
+We welcome contributions and improvements! If you have suggestions, feel free to open an issue or submit a pull request.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- Special thanks to the developers of the libraries and tools used in this project:
+    - [React](https://reactjs.org/) – JavaScript library for building user interfaces.
+    - [Redux](https://redux.js.org/) – State management library.
+    - [TailwindCSS](https://tailwindcss.com/) – Utility-first CSS framework.
+    - [Ant Design](https://ant.design/) – UI component library.
+    - [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) – Library for JWT authentication.
+    - [Sonner](https://sonner.dev/) – Lightweight toast notifications.
