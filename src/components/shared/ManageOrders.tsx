@@ -25,7 +25,7 @@ const ManageOrders = () => {
             {orders?.data?.map((order: any) => (
               <tr key={order._id} className="border-b hover:bg-gray-100">
                 <td className="px-6 py-4">{order._id}</td>
-                <td className="px-6 py-4">{order.customer?.name || "N/A"}</td>
+                <td className="px-6 py-4">{order.user?.name || "N/A"}</td>
                 <td className="px-6 py-4">${order.totalPrice.toFixed(2)}</td>
                 <td className="px-6 py-4">
                   <span
