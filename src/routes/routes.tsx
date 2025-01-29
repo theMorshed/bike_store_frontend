@@ -16,6 +16,7 @@ import ManageProducts from "../components/shared/ManageProducts";
 import ManageUsers from "../components/shared/ManageUsers";
 import CustomerHome from "../pages/customer/CustomerHome";
 import ManangeCustomerOrders from "../components/shared/ManageCustomerOrders";
+import VerifyOrder from "../pages/VerifyOrder";
 
 const router = createBrowserRouter([
     {
@@ -89,6 +90,10 @@ const router = createBrowserRouter([
             {
                 path: 'orders',
                 element: <ManangeCustomerOrders />
+            },
+            {
+                path: 'orders/verify',
+                element: <VerifyOrder />
             }
         ]
     }

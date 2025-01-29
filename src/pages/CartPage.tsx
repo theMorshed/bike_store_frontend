@@ -7,6 +7,10 @@ import {
   clearCart,
   Product,
 } from '../redux/features/cart/cartSlice';
+import { selectCurrentUser } from '../redux/features/auth/authSlice';
+import { useCreateOrderMutation } from '../redux/features/cart/orderApi';
+import { useEffect } from 'react';
+import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 
 // Define the CartProduct type
@@ -17,9 +21,12 @@ interface CartProduct {
 
 const CartPage = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const cartProducts: CartProduct[] = useSelector(selectCartProducts);
   const totalPrice: number = useSelector(selectTotalPrice);
+  const [createOrder, { isLoading, isSuccess, data, isError, error }] = useCreateOrderMutation();
+  const navigate = useNavigate();
+
+  const user = useSelector(selectCurrentUser);
 
   const handleRemove = (productId: string) => {
     dispatch(removeProduct(productId));
@@ -35,9 +42,29 @@ const CartPage = () => {
     dispatch(clearCart());
   };
 
-  const handleCheckout = () => {
-    navigate('/checkout');
+  const handlePlaceOrder = async () => {
+    if (user) {
+      await createOrder({ user: user?.id, products: cartProducts });
+    } else {
+      navigate('/login');
+    }
   };
+
+  const toastId = "cart";
+  useEffect(() => {
+    if (isLoading) toast.loading("Processing ...", { id: toastId });
+
+    if (isSuccess) {
+      toast.success(data?.message, { id: toastId });
+      if (data?.data) {
+        setTimeout(() => {
+          window.location.href = data.data;
+        }, 1000);
+      }
+    }
+
+    if (isError) toast.error(JSON.stringify(error), { id: toastId });
+  }, [data?.data, data?.message, error, isError, isLoading, isSuccess]);
 
   return (
     <div className="container mx-auto p-4">
@@ -84,10 +111,10 @@ const CartPage = () => {
               Clear Cart
             </button>
             <button
-              onClick={handleCheckout}
+              onClick={handlePlaceOrder}
               className="bg-amber-600 text-white px-4 py-2 rounded"
             >
-              Proceed to Checkout
+              Place Order
             </button>
           </div>
         </div>

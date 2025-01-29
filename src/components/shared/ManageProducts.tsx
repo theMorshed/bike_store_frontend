@@ -1,12 +1,45 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { useEffect, useRef } from "react";
 import { useGetAllProductsQuery } from "../../redux/features/product/productManagementApi";
+import { toast } from "sonner";
 
 const ManageProducts = () => {
-  const { data: products, isLoading, isError } = useGetAllProductsQuery(undefined); // Fetching products from API
+  const { data: products, isLoading, isSuccess, isError } = useGetAllProductsQuery(undefined); // Fetching products from API
 
-  if (isLoading) return <p className="text-center text-lg">Loading products...</p>;
-  if (isError) return <p className="text-center text-lg text-red-600">Error loading products.</p>;
+  const loadingToastId = useRef<string | undefined | number>(undefined);
+
+  useEffect(() => {
+    // Handle loading state
+    if (isLoading) {
+      if (!loadingToastId.current) {
+        loadingToastId.current = toast.loading("Loading...");
+      }
+    } else {
+      // Dismiss loading toast when loading ends
+      if (loadingToastId.current) {
+        toast.dismiss(loadingToastId.current);
+        loadingToastId.current = undefined;
+      }
+    }
+
+    // Handle success state
+    if (isSuccess) {
+      toast.success("Products loaded successfully");
+    }
+
+    // Handle error state
+    if (isError) {
+      toast.error("Failed to load all products. Please try again later.");
+    }
+
+    // Cleanup function to dismiss the loading toast if the component unmounts
+    return () => {
+      if (loadingToastId.current) {
+        toast.dismiss(loadingToastId.current);
+      }
+    };
+  }, [isLoading, isError, isSuccess]);
 
   return (
     <div className="container mx-auto p-6">

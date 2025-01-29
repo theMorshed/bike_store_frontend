@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useAppDispatch } from "../redux/hooks";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../redux/features/auth/authApi";
 
 import { Link } from "react-router-dom";
@@ -12,14 +12,23 @@ import { verifyToken } from "../utils/verifyToken";
 import PHInput from "../components/form/PHInput";
 import { Button } from "antd";
 import { loadCartFromLocalStorage } from "../redux/features/cart/cartSlice"; // Import the action to load the cart
+import { useEffect } from "react";
 
 const Login = () => {
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
     const [login] = useLoginMutation();
 
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (location.pathname !== "/login") {
+        localStorage.setItem("redirectAfterLogin", location.pathname);
+        }
+    }, [location]);
+
     const defaultValues = {
-        email: 'morshed@gmail.com',
+        email: 'tapas@gmail.com',
         password: '123456'
     };
 
@@ -38,7 +47,9 @@ const Login = () => {
             const savedCart = localStorage.getItem('cart');
             if (savedCart) {
                 dispatch(loadCartFromLocalStorage(JSON.parse(savedCart)));
-                navigate('/checkout');
+                const redirectPath = localStorage.getItem("redirectAfterLogin") || "/";
+                navigate(redirectPath);
+                localStorage.removeItem("redirectAfterLogin");
                 toast.success('Logged in', {id: toastId, duration: 2000});
                 return;
             }

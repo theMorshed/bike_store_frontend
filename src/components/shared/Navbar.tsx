@@ -74,7 +74,7 @@ const Navbar = () => {
                         {user ? (
                         // If the user is logged in, show the Logout button
                             <>                                                    
-                                <Link to="/login" onClick={handleLogout} className="hover:text-amber-700">Logout</Link>
+                                <Link to="/login" onClick={handleLogout} className="block hover:text-amber-700">Logout</Link>
                             </>
                         ) : (
                             // If the user is not logged in, show Login and Register buttons
@@ -87,7 +87,7 @@ const Navbar = () => {
                         <Link to="/cart" className="relative">
                         <ShoppingCart size={24} />
                         {totalQuantity > 0 && (
-                            <span className="absolute -top-2 -right-2 bg-amber-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                            <span className="absolute -top-2 bg-amber-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
                             {totalQuantity}
                             </span>
                         )}

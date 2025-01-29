@@ -2,8 +2,15 @@ import { useParams } from "react-router-dom";
 import { useGetProductByIdQuery } from "../redux/features/product/productManagementApi";
 import { useEffect, useRef } from "react";
 import { toast } from "sonner";
+import { useDispatch } from "react-redux";
+import { addProduct, Product } from "../redux/features/cart/cartSlice";
 
 const SingleProductPage = () => {
+  const dispatch = useDispatch();
+
+  const handleAddToCart = (product: Product) => {
+    dispatch(addProduct({ product, quantity: 1 }));
+  };
   const { id } = useParams<{ id: string }>();
   const { data: product, isLoading, isError, isSuccess } = useGetProductByIdQuery(id!);
 
@@ -67,7 +74,7 @@ const SingleProductPage = () => {
               <span className="bg-amber-100 text-amber-600 px-3 py-1 rounded-full text-sm font-medium">20% OFF</span>
             </div>
 
-            <button className="w-full bg-amber-600 text-white py-3 px-6 rounded-lg text-lg font-semibold hover:bg-blue-700 transition duration-300">
+            <button onClick={() => handleAddToCart(product?.data)} className="w-full bg-amber-600 text-white py-3 px-6 rounded-lg text-lg font-semibold hover:bg-amber-700 transition duration-300">
               Add to Cart
             </button>
 

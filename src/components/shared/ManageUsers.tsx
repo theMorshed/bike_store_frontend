@@ -1,11 +1,44 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useRef } from "react";
 import { useGetAllUsersQuery } from "../../redux/features/admin/adminApi";
+import { toast } from "sonner";
 
 const ManageUsers = () => {
-  const { data: users, isLoading, isError } = useGetAllUsersQuery(undefined); // Fetching users from API
+  const { data: users, isLoading, isSuccess, isError } = useGetAllUsersQuery(undefined); // Fetching users from API
 
-  if (isLoading) return <p className="text-center text-lg">Loading users...</p>;
-  if (isError) return <p className="text-center text-lg text-red-600">Error loading users.</p>;
+  const loadingToastId = useRef<string | undefined | number>(undefined);
+
+  useEffect(() => {
+    // Handle loading state
+    if (isLoading) {
+      if (!loadingToastId.current) {
+        loadingToastId.current = toast.loading("Loading...");
+      }
+    } else {
+      // Dismiss loading toast when loading ends
+      if (loadingToastId.current) {
+        toast.dismiss(loadingToastId.current);
+        loadingToastId.current = undefined;
+      }
+    }
+
+    // Handle success state
+    if (isSuccess) {
+      toast.success("All users loaded successfully");
+    }
+
+    // Handle error state
+    if (isError) {
+      toast.error("Failed to load all users. Please try again later.");
+    }
+
+    // Cleanup function to dismiss the loading toast if the component unmounts
+    return () => {
+      if (loadingToastId.current) {
+        toast.dismiss(loadingToastId.current);
+      }
+    };
+  }, [isLoading, isError, isSuccess]);
 
   return (
     <div className="container mx-auto p-6">
