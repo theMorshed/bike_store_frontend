@@ -45,6 +45,7 @@ const CartPage = () => {
   const handlePlaceOrder = async () => {
     if (user) {
       await createOrder({ user: user?.id, products: cartProducts });
+      localStorage.removeItem('cart');
     } else {
       navigate('/login');
     }

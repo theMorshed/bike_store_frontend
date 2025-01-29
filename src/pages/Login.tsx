@@ -28,7 +28,7 @@ const Login = () => {
     }, [location]);
 
     const defaultValues = {
-        email: 'tapas@gmail.com',
+        email: 'morshed@gmail.com',
         password: '123456'
     };
 
