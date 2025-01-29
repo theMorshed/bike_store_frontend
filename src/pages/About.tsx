@@ -1,6 +1,6 @@
 const AboutPage = () => {
   return (
-    <div className="container mx-auto py-30">
+    <div className="container mx-auto py-30 px-4">
       <h1 className="text-5xl font-bold text-left mb-8 text-gray-800">About Bike Store</h1>
       
       <div className="flex flex-col items-left mb-8">

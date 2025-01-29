@@ -6,6 +6,7 @@ const AdminHome = () => {
   const { data: users, isLoading: usersLoading } = useGetAllUsersQuery(undefined);
   const { data: products, isLoading: productsLoading } = useGetAllProductsQuery(undefined);
   const { data: orders, isLoading: ordersLoading } = useGetAllOdersQuery(undefined);
+  console.log(users, products, orders);
 
   if (usersLoading || productsLoading || ordersLoading) {
     return <p>Loading data...</p>;
@@ -21,15 +22,15 @@ const AdminHome = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div className="bg-white shadow-md rounded-lg p-6">
           <h3 className="text-lg font-semibold mb-2">Total Products</h3>
-          <p className="text-2xl font-bold text-blue-600">{products?.data?.length || 0}</p>
+          <p className="text-2xl font-bold text-amber-600">{products?.data?.length || 0}</p>
         </div>
         <div className="bg-white shadow-md rounded-lg p-6">
           <h3 className="text-lg font-semibold mb-2">Total Users</h3>
-          <p className="text-2xl font-bold text-blue-600">{users?.data?.length || 0}</p>
+          <p className="text-2xl font-bold text-amber-600">{users?.data?.length || 0}</p>
         </div>
         <div className="bg-white shadow-md rounded-lg p-6">
           <h3 className="text-lg font-semibold mb-2">Total Orders</h3>
-          <p className="text-2xl font-bold text-blue-600">{orders?.data?.length || 0}</p>
+          <p className="text-2xl font-bold text-amber-600">{orders?.data?.length || 0}</p>
         </div>
       </div>
     </main>

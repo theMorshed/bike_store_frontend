@@ -1,8 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useGetAllOdersQuery } from "../../redux/features/admin/adminApi";
+import { useGetCustomerOrdersQuery } from "../../redux/features/admin/adminApi";
+import { selectCurrentUser } from "../../redux/features/auth/authSlice";
+import { useAppSelector } from "../../redux/hooks";
 
-const ManageOrders = () => {
-  const { data: orders, isLoading, isError } = useGetAllOdersQuery(undefined); // Fetching orders from API
+const ManangeCustomerOrders = () => {
+  const { id } = useAppSelector(selectCurrentUser) || {}; // Get user ID from Redux store (if logged in)
+  
+    // Fetch orders for current customer (this is always called)
+    const { data: orders = [], isLoading, isError } = useGetCustomerOrdersQuery(id || "");
 
   if (isLoading) return <p className="text-center text-lg">Loading orders...</p>;
   if (isError) return <p className="text-center text-lg text-red-600">Error loading orders.</p>;
@@ -15,7 +20,6 @@ const ManageOrders = () => {
           <thead className="bg-amber-600 text-white">
             <tr>
               <th className="px-6 py-3 text-left">Order ID</th>
-              <th className="px-6 py-3 text-left">Customer</th>
               <th className="px-6 py-3 text-left">Total Price</th>
               <th className="px-6 py-3 text-left">Status</th>
               <th className="px-6 py-3 text-left">Actions</th>
@@ -25,7 +29,6 @@ const ManageOrders = () => {
             {orders?.data?.map((order: any) => (
               <tr key={order._id} className="border-b hover:bg-gray-100">
                 <td className="px-6 py-4">{order._id}</td>
-                <td className="px-6 py-4">{order.customer?.name || "N/A"}</td>
                 <td className="px-6 py-4">${order.totalPrice.toFixed(2)}</td>
                 <td className="px-6 py-4">
                   <span
@@ -63,4 +66,4 @@ const handleViewOrder = (orderId: string) => {
   console.log(`View details for order: ${orderId}`);
 };
 
-export default ManageOrders;
+export default ManangeCustomerOrders;

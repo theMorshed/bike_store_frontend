@@ -13,8 +13,14 @@ const adminApi = baseApi.injectEndpoints({
                 url: `/user`,
                 method: 'GET',
             }),
-        }),      
+        }), 
+        getCustomerOrders: builder.query({
+            query: (customerId: string) => ({
+                url: `/orders/customer/${customerId}`,
+                method: 'GET',
+            }),
+        }),     
     })
 })
 
-export const { useGetAllOdersQuery, useGetAllUsersQuery } = adminApi;
+export const { useGetAllOdersQuery, useGetAllUsersQuery, useGetCustomerOrdersQuery } = adminApi;

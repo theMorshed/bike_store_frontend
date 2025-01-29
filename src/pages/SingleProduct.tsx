@@ -62,16 +62,16 @@ const SingleProductPage = () => {
             </p>
 
             <div className="flex items-center gap-4 mb-6">
-              <span className="text-2xl font-bold text-blue-600">${product?.data?.price}</span>
+              <span className="text-2xl font-bold text-amber-600">${product?.data?.price}</span>
               <span className="text-gray-500 line-through">${product?.data?.price}</span>
-              <span className="bg-green-100 text-green-600 px-3 py-1 rounded-full text-sm font-medium">20% OFF</span>
+              <span className="bg-amber-100 text-amber-600 px-3 py-1 rounded-full text-sm font-medium">20% OFF</span>
             </div>
 
-            <button className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg text-lg font-semibold hover:bg-blue-700 transition duration-300">
+            <button className="w-full bg-amber-600 text-white py-3 px-6 rounded-lg text-lg font-semibold hover:bg-blue-700 transition duration-300">
               Add to Cart
             </button>
 
-            <div className="mt-6 text-gray-500 text-sm">
+            <div className="mt-6 text-gray-600 text-sm">
               <p><strong>Category:</strong> {product?.data?.category}</p>
               <p><strong>Stock:</strong> Available</p>
               <p><strong>SKU:</strong> 12345</p>

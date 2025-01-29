@@ -66,7 +66,7 @@ const Navbar = () => {
 
             {/* Mobile Menu */}
             {isMenuOpen && (
-                <div className="sm:hidden text-blue-600 p-4">
+                <div className="sm:hidden text-amber-600 p-4">
                     <ul className="space-y-4">
                         <Link to="/" className="block hover:text-amber-700">Home</Link>
                         <Link to="/products" className="block hover:text-amber-700">Products</Link>
@@ -87,7 +87,7 @@ const Navbar = () => {
                         <Link to="/cart" className="relative">
                         <ShoppingCart size={24} />
                         {totalQuantity > 0 && (
-                            <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                            <span className="absolute -top-2 -right-2 bg-amber-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
                             {totalQuantity}
                             </span>
                         )}

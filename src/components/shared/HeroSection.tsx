@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
     return (
-        <section className="w-full pt-10 pb-30">
+        <section className="w-full pt-10 pb-30 px-4">
             <div className="container mx-auto md:flex items-center justify-between">
                 {/* Left Side (Text) */}
                 <div className="w-full md:w-1/2 text-center md:text-left">

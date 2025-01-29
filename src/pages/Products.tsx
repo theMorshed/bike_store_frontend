@@ -108,7 +108,7 @@ const ProductsPage = () => {
         </form>
       </aside>
 
-      <main className="w-full md:w-2/4 lg:w-3/4 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+      <main className="w-full md:w-2/4 lg:w-3/4 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 sm: px-2">
         {allProducts?.data?.map((product: Product) => (
             <div key={product._id} className="bg-white rounded-lg p-4 shadow-md">
               <img
