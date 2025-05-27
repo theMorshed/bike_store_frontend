@@ -11,7 +11,7 @@ import { selectCurrentUser } from '../redux/features/auth/authSlice';
 import { useCreateOrderMutation } from '../redux/features/cart/orderApi';
 import { useEffect } from 'react';
 import { toast } from 'sonner';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 // Define the CartProduct type
 interface CartProduct {
@@ -21,12 +21,12 @@ interface CartProduct {
 
 const CartPage = () => {
   const dispatch = useDispatch();
+  const user = useSelector(selectCurrentUser);
   const cartProducts: CartProduct[] = useSelector(selectCartProducts);
   const totalPrice: number = useSelector(selectTotalPrice);
   const [createOrder, { isLoading, isSuccess, data, isError, error }] = useCreateOrderMutation();
   const navigate = useNavigate();
 
-  const user = useSelector(selectCurrentUser);
 
   const handleRemove = (productId: string) => {
     dispatch(removeProduct(productId));
@@ -42,12 +42,15 @@ const CartPage = () => {
     dispatch(clearCart());
   };
 
-  const handlePlaceOrder = async () => {
-    if (user) {
+  const location = useLocation();
+
+  const handlePlaceOrder = async () => {    
+    if (user && user?.role === 'customer') {
       await createOrder({ user: user?.id, products: cartProducts });
       localStorage.removeItem('cart');
     } else {
-      navigate('/login');
+      toast.error('You are not the customer. so create a customer accout before place an order.');
+      navigate('/login',{ state: { from: location.pathname } });
     }
   };
 

@@ -24,7 +24,7 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="text-amber-600 p-4 font-bold py-8">
+        <nav className="sticky top-0 z-50 bg-white text-amber-600 p-4 font-bold py-6">
             <div className="container mx-auto flex justify-between items-center">
                 <div className="text-amber-600 text-2xl font-bold"><Link to="/">BikeStore</Link></div>
                 
